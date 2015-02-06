@@ -1,7 +1,8 @@
+package Perl::Critic::Policy::TryTiny::RequireCatch;
 use strict;
 use warnings;
 use utf8;
-package Perl::Critic::Policy::TryTiny::RequireCatch;
+
 # ABSTRACT: Always include a "catch" block when using "try"
 
 use Readonly;

@@ -1,8 +1,8 @@
+package Perl::Critic::Policy::TryTiny::ProhibitExitingSubroutine;
 use strict;
 use warnings;
 use utf8;
 
-package Perl::Critic::Policy::TryTiny::ProhibitExitingSubroutine;
 # ABSTRACT: Ban next/last/return in Try::Tiny blocks
 
 use Readonly;

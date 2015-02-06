@@ -1,7 +1,7 @@
+package Perl::Critic::Lokku;
 use strict;
 use warnings;
 use utf8;
-package Perl::Critic::Lokku;
 # ABSTRACT: A collection of Perl::Critic policies from Lokku
 
 1;
