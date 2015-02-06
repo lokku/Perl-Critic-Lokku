@@ -25,6 +25,21 @@ sub default_themes {
     return qw(bugs);
 }
 
+sub prepare_to_scan_document {
+    my $self = shift;
+    my $document = shift;
+
+    return $document->find_any(sub {
+        my $element = $_[1];
+        return 0 if ! $element->isa('PPI::Statement::Include');
+        my @children = grep { $_->significant } $element->children;
+        if ($children[1] && $children[1]->isa('PPI::Token::Word') && $children[1] eq 'Try::Tiny') {
+            return 1;
+        }
+        return 0;
+    });
+}
+
 sub applies_to {
     return 'PPI::Token::Word';
 }

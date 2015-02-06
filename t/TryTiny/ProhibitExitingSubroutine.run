@@ -237,3 +237,21 @@ catch {
 ## cut
 
 try
+
+## name Try::Tiny not imported, perhaps we will support TryCatch and others in future
+## failures 0
+## cut
+
+sub hello {
+    for my $i (0..10) {
+        try {
+            print "$i\n";
+            next;
+        }
+        catch {
+            warn $_;
+        };
+    }
+}
+
+hello();

@@ -53,3 +53,13 @@ catch {
 finally {
     $hi = "eight";
 };
+
+## name Try::Tiny not imported, perhaps we will support TryCatch and others in future
+## failures 0
+## cut
+
+
+my $hi;
+try {
+    $hi = "nine";
+};
