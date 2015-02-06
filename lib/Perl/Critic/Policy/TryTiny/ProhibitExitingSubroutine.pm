@@ -72,18 +72,26 @@ sub _check_block {
 
     my $wanted;
     $wanted = sub {
-        my ($parent, $element, $in_for_loop) = @_;
+        my ($parent, $element, $in_for_loop, $in_sub_block) = @_;
         $in_for_loop //= 0;
+        $in_sub_block //= 0;
 
         if ($element->isa('PPI::Statement::Compound')) {
             if ( $element->type eq 'for' || $element->type eq 'foreach') {
                 my ($subblock) = grep { $_->isa('PPI::Structure::Block') } $element->schildren;
-                $subblock->find_any(sub { $wanted->(@_, 1) });
+                $subblock->find_any(sub { $wanted->(@_, 1, $in_sub_block) });
+                return undef;
+            }
+        }
+        elsif ($element->isa("PPI::Structure::Block")) {
+            my $prev_sib = $element->sprevious_sibling;
+            if ($prev_sib && $prev_sib->isa("PPI::Token::Word") && $prev_sib eq 'sub') {
+                $element->find_any(sub { $wanted->(@_, $in_for_loop, 1) });
                 return undef;
             }
         }
         elsif ($element->isa('PPI::Token::Word')) {
-            if ($element eq 'return') {
+            if ($element eq 'return' && ! $in_sub_block) {
                 $violation = $self->violation($DESC, $EXPL, $element);
                 return 1;
             }

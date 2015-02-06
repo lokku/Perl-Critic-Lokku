@@ -191,7 +191,6 @@ try {
 
 ## name A "try" invocation with subref, and a "return" inside
 ## failures 0
-## TODO I have yet to code this
 ## cut
 
 use Try::Tiny;
@@ -200,6 +199,23 @@ try {
     my $callback = sub {
         print "hello\n";
         return "hello";
+    };
+    $callback->();
+};
+
+## name A "try" invocation with subref inside it, with "try" inside it, with "return"
+## failures 1
+## cut
+
+use Try::Tiny;
+
+try {
+    my $callback = sub {
+        try {
+            print "hello\n";
+            return "hello\n";
+        };
+        print "bla";
     };
     $callback->();
 };
