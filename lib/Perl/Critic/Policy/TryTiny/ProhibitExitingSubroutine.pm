@@ -68,20 +68,39 @@ sub _check_block {
     my $self = shift;
     my $block = shift;
 
-    for my $word (@{ $block->find('PPI::Token::Word') || [] }) {
-        if ($word eq 'return') {
-            return $self->violation($DESC, $EXPL, $word);
-        }
+    my $violation;
 
-        my $sib = $word->snext_sibling;
+    my $wanted;
+    $wanted = sub {
+        my ($parent, $element, $in_for_loop) = @_;
+        $in_for_loop //= 0;
 
-        if ($word eq 'next' || $word eq 'redo' || $word eq 'last') {
-            if (! $sib || ! _is_label($sib)) {
-                return $self->violation($DESC, $EXPL, $word);
+        if ($element->isa('PPI::Statement::Compound')) {
+            if ( $element->type eq 'for' || $element->type eq 'foreach') {
+                my ($subblock) = grep { $_->isa('PPI::Structure::Block') } $element->schildren;
+                $subblock->find_any(sub { $wanted->(@_, 1) });
+                return undef;
             }
         }
-    }
-    return;
+        elsif ($element->isa('PPI::Token::Word')) {
+            if ($element eq 'return') {
+                $violation = $self->violation($DESC, $EXPL, $element);
+                return 1;
+            }
+
+            my $sib = $element->snext_sibling;
+
+            if ($element eq 'next' || $element eq 'redo' || $element eq 'last') {
+                if (! $in_for_loop && (! $sib || ! _is_label($sib))) {
+                    $violation = $self->violation($DESC, $EXPL, $element);
+                    return 1;
+                }
+            }
+        }
+    };
+    $block->find_any($wanted);
+
+    return $violation;
 }
 
 sub _is_label {
