@@ -113,8 +113,8 @@ Take this code:
         # other code
     }
 
-The next statement will not go the the next iteration of the for-loop, rather,
-it will exit the "try" block, emitting a warning if warnings are enabled.
+The next statement will not go to the next iteration of the for-loop, rather,
+it will exit the try block, emitting a warning if warnings are enabled.
 
 This is probably not what the developer had intended, so this policy prohibits it.
 
@@ -144,6 +144,6 @@ This Policy is not configurable except for the standard options.
 =head1 KNOWN BUGS
 
 This policy assumes that L<Try::Tiny> is being used, and doesn't check for
-whether an alternative like L<TryCatch>.
+whether an alternative like L<TryCatch> is being used.
 
 =cut

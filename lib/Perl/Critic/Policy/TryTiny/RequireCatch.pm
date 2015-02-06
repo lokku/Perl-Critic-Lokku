@@ -82,6 +82,6 @@ This Policy is not configurable except for the standard options.
 =head1 KNOWN BUGS
 
 This policy assumes that L<Try::Tiny> is being used, and doesn't check for
-whether an alternative like L<TryCatch>.
+whether an alternative like L<TryCatch> is being used.
 
 =cut

@@ -20,7 +20,7 @@ about L<Try::Tiny>.
 
 =head3 L<Perl::Critic::Policy::TryTiny::RequireCatch>
 
-Did you know that C< try { ... } finally { ... }> suppresse all errors? This
+Did you know that C< try { ... } finally { ... }> suppresses all errors? This
 policy will require you to include a C<catch> block, even if it's only empty.
 
 =head3 L<Perl::Critic::Policy::TryTiny::ProhibitExitingSubroutine>
