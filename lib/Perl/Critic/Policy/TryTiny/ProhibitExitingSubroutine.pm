@@ -179,13 +179,11 @@ One way to fix this is to use labels:
         # other code
     }
 
+This policy assumes that L<Try::Tiny> is being used, and it doesn't run if it
+can't find it being imported.
+
 =head1 CONFIGURATION
 
 This Policy is not configurable except for the standard options.
-
-=head1 KNOWN BUGS
-
-This policy assumes that L<Try::Tiny> is being used, and it doesn't run if it
-can't find it being imported.
 
 =cut
