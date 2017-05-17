@@ -52,7 +52,7 @@ sub violates {
 
     my $try_block = $elem->snext_sibling() or return;
     my $sib = $try_block->snext_sibling();
-    if ($sib->content ne 'catch') {
+    if (!$sib || $sib->content ne 'catch') {
         return $self->violation($DESC, $EXPL, $elem);
     }
     return;
