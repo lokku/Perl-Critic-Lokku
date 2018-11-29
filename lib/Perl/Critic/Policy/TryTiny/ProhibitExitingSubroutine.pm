@@ -88,8 +88,8 @@ sub _check_block {
     my $wanted;
     $wanted = sub {
         my ($parent, $element, $in_for_loop, $in_sub_block) = @_;
-        $in_for_loop //= 0;
-        $in_sub_block //= 0;
+        $in_for_loop = (defined $in_for_loop) ? $in_for_loop : 0;
+        $in_sub_block = (defined $in_sub_block) ? $in_sub_block : 0;
 
         if ($element->isa('PPI::Statement::Compound')) {
             if ( $element->type eq 'for' || $element->type eq 'foreach') {
