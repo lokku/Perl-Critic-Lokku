@@ -48,7 +48,7 @@ sub violates {
     my ($self, $elem, undef) = @_;
 
     return if $elem->content ne 'try';
-    return if ! is_function_call($elem);
+    return if ! is_function_call($elem) && !($] >= 5.033007 && is_perl_bareword($elem));
 
     my @blocks_to_check;
 
